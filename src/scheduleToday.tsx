@@ -8,7 +8,7 @@ export function ScheduleTodayComponent(props) {
     return (
         <div className="flex flex-row gap-[2vw] mx-[clamp(5px,1.5vw,30px)] self-center">
             <div className="flex flex-col gap-[2vh] w-[70%] max-h-[50vh] rounded-[20px] px-[clamp(5px,1.5vw,30px)] py-[clamp(5px,3vh,30px)] bg-plate-accent">
-                <p className="text-[clamp(1rem,2vw,2rem)] text-center font-semibold">Задачи на сегодня</p>
+                <p className="text-[clamp(1rem,2vw,2rem)] text-center font-semibold text-header">Задачи на сегодня</p>
                 <div className="grid grid-cols-2 overflow-y-auto  gap-x-[clamp(5px,1.5vw,30px)] gap-y-[clamp(5px,3vh,30px)]">
                     {
                         tasksOnToday.map((el, index) => (
@@ -19,7 +19,7 @@ export function ScheduleTodayComponent(props) {
             </div>
 
             <div className="flex flex-col gap-[2vh] w-[30%] max-h-[80vh] px-[clamp(5px,1.5vw,30px)] py-[clamp(5px,3vh,30px)] bg-plate-accent rounded-[20px]">
-                <p className="text-[clamp(1rem,2vw,2rem)] font-semibold text-center">Топ задач на неделю</p>
+                <p className="text-[clamp(1rem,2vw,2rem)] font-semibold text-center text-header">Топ задач на неделю</p>
                 <div className="flex flex-col gap-[clamp(5px,2vh,20px)] overflow-y-auto">
                     {
                         tasksWeekly.map((day) => (

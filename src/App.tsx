@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import "../node_modules/flatpickr/dist/themes/dark.css";
 
 import { HomeComponent } from "./home.tsx";
 import { AddTaskComponent } from "./addTask.tsx";

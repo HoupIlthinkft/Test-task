@@ -5,14 +5,32 @@
 @tailwind utilities;
 
 @theme {
-    --color-plate-accent: #fda13f;
-    --color-plate-muted: #fdb972;
-    --color-content: #024D66;
-    --color-white: #fafafa;
-    --color-plate-nav: #61B3CE;
-    --color-plate-task: #D9D9D9;
+    --color-plate-accent: #7B7B7B;
+    --color-plate-muted: #767C83;
+    
+    --color-task-content: #859CA4;
+    --color-task-header: #767676;
+    --color-task-border: #323232;
 
-    --color-priority-high: #A80000;
-    --color-priority-medium: #635B00;
-    --color-priority-low: #006020;
+    --color-header: #B4A9A9;
+    --color-nav: #0A3746;
+    --color-hover-nav: #B4A9A9;
+
+    --color-plate-root: #323232;
+    --color-plate-nav: #24353A;
+    --color-plate-task: #313028;
+
+    --color-priority-high: #FF6363;
+    --color-priority-medium: #A29A3E;
+    --color-priority-low: #44AB66;
+}
+
+@font-face {
+    font-family: "Jost";
+    src: url(./assets/Jost/Jost-VariableFont_wght.ttf) format("truetype");
+    font-weight: 100 900;
+}
+
+#root {
+    font-family: Jost;
 }
