@@ -1,27 +1,31 @@
 import { TaskComponent } from "./task.tsx";
 
-export function ScheduleTodayComponent() {
-    const data = [];
+export function ScheduleTodayComponent(props) {
+    
+    const tasksOnToday = props.tasksOnToday.tasks;
+    const tasksWeekly = props.tasksWeekly;
     
     return (
-        <div>
-            <div>
-                <p>Задачи на сегодня</p>
-                <div>
+        <div className="flex flex-row gap-[2vw] mx-[clamp(5px,1.5vw,30px)] self-center">
+            <div className="flex flex-col gap-[2vh] w-[70%] max-h-[50vh] rounded-[20px] px-[clamp(5px,1.5vw,30px)] py-[clamp(5px,3vh,30px)] bg-plate-accent">
+                <p className="text-[clamp(1rem,2vw,2rem)] text-center font-semibold">Задачи на сегодня</p>
+                <div className="grid grid-cols-2 overflow-y-auto  gap-x-[clamp(5px,1.5vw,30px)] gap-y-[clamp(5px,3vh,30px)]">
                     {
-                        data.map((el, index) => (
+                        tasksOnToday.map((el, index) => (
                             <TaskComponent key={index} header={el.header} content={el.content} priority={el.priority} deadline={el.deadline}/>
                         ))
                     }
                 </div>
             </div>
 
-            <div>
-                <p>Топ задач на неделю</p>
-                <div>
+            <div className="flex flex-col gap-[2vh] w-[30%] max-h-[80vh] px-[clamp(5px,1.5vw,30px)] py-[clamp(5px,3vh,30px)] bg-plate-accent rounded-[20px]">
+                <p className="text-[clamp(1rem,2vw,2rem)] font-semibold text-center">Топ задач на неделю</p>
+                <div className="flex flex-col gap-[clamp(5px,2vh,20px)] overflow-y-auto">
                     {
-                        data.map((el, index) => (
-                            el.priority == "high" ? <TaskComponent key={index} header={el.header} content={el.content} priority={el.priority} deadline={el.deadline}/> : "" 
+                        tasksWeekly.map((day) => (
+                            day.tasks.map((el, index) => (
+                                el.priority == "high" ? <TaskComponent key={index} header={el.header} content={el.content} priority={el.priority} deadline={el.deadline}/> : "" 
+                            ))
                         ))
                     }
                 </div>
