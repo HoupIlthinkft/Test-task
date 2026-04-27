@@ -5,18 +5,16 @@ import { useNotificationStore } from "./config.ts";
 export function callNotifications(typeNotification : "error" | "success", content : string) {
     useNotificationStore.getState().setNotificationContent([typeNotification, content]);
     useNotificationStore.getState().setNotificationActivity(true);
-    console.log(typeNotification, content);
-    
 }
 
 
 export function NotificationComponent() {
 
     const notificationRef = useRef(null);
-    const notification = useNotificationStore((state) => state.notificationActivity);
+    const notification : boolean = useNotificationStore((state) => state.notificationActivity);
 
-    const [typeNotification, setTypeNotification] = useState(null);
-    const [content, setContent] = useState(null);
+    const [typeNotification, setTypeNotification] = useState<"error" | "success" | null>(null);
+    const [content, setContent] = useState<string | null>(null);
 
     useEffect(() => {
         if (notification) {

@@ -12,6 +12,7 @@ import { NotificationComponent } from "./notifications.tsx";
 
 import { getTasksOnThisWeekly } from "./requests.ts";
 import { useTasksStore } from "./config.ts";
+import type { TaskCollectionIntf } from "./config.ts";
 
 export default function App() {
     const [activePage, setActivePage] = useState(0);
@@ -19,7 +20,7 @@ export default function App() {
     
     useEffect(() => {
         const loadTasks = async () => {
-            const data = await getTasksOnThisWeekly();
+            const data : TaskCollectionIntf[] = await getTasksOnThisWeekly();
 
             useTasksStore.getState().setTasksOnWeeklyCollections(data);
             useTasksStore.getState().setTasksCustomRangeCollections(data);
@@ -33,8 +34,8 @@ export default function App() {
 
     if (!render) return;
 
-    const tasksWeekly = useTasksStore.getState().tasksOnWeeklyCollections;
-    const tasksCustom = useTasksStore.getState().tasksCustomRangeCollections;
+    const tasksWeekly : TaskCollectionIntf[] = useTasksStore.getState().tasksOnWeeklyCollections;
+    const tasksCustom : TaskCollectionIntf[] = useTasksStore.getState().tasksCustomRangeCollections;
     
 
     const pages : string[] = ["Главная страница", "Расписание на сегодня", "Расписание на неделю", "Добавить задачу", "Выбрать даты"];

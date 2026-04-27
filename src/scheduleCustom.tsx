@@ -4,20 +4,23 @@ import Flatpickr from "react-flatpickr";
 import { TaskComponent } from "./task.tsx";
 import { getTasksForCustomRange } from "./requests.ts";
 
-export function ScheduleCustomComponent(props) {
+import type { TasksCollectionIntf, TaskIntf } from "./config.ts";
+
+export function ScheduleCustomComponent({tasksCustom} : {
+    tasksCustom: TasksCollectionIntf[];
+}) {
 
     const [rangeDate, setRangeDate] = useState<Date[] | null>(null);
 
-    const [sortingMenuOpen, setSortingMenuOpen] = useState(false);
+    const [sortingMenuOpen, setSortingMenuOpen] = useState<boolean>(false);
     const rangeCalendar = useRef(null);
 
     const [sorting, setSorting] = useState<"usSorted" | "sorted" | "revSorted">("unSorted");
-    const [sortedHigh, setSortedHigh] = useState(true);
-    const [sortedMedium, setSortedMedium] = useState(true);
-    const [sortedLow, setSortedLow] = useState(true);
+    const [sortedHigh, setSortedHigh] = useState<boolean>(true);
+    const [sortedMedium, setSortedMedium] = useState<boolean>(true);
+    const [sortedLow, setSortedLow] = useState<boolean>(true);
 
-    const tasksCustom = props.tasksCustom
-    
+
     useEffect(() => {
         if (rangeDate != null) getTasksForCustomRange([new Date(rangeDate[0].setHours(new Date().getTimezoneOffset() / -60, 0, 0)).toJSON(), new Date(rangeDate[1].setHours(new Date().getTimezoneOffset() / -60, 0, 0)).toJSON()]);
     }, [rangeDate]);
@@ -44,7 +47,7 @@ export function ScheduleCustomComponent(props) {
                                 altFormat: 'F j',
                                 dateFormat: 'Y-m-d',
                             }}
-                            onChange={(selectedDates) => {
+                            onChange={(selectedDates : [Date, Date]) => {
                                 if (selectedDates.length == 2) setRangeDate(selectedDates);
                             }}
                         />
@@ -89,8 +92,8 @@ export function ScheduleCustomComponent(props) {
             <div className="grid grid-cols-2 md:grid-cols-3 overflow-y-auto min-h-[30vh] md:min-h-[40vh] max-h-[50vh] bg-plate-accent rounded-[15px] px-[clamp(5px,2vw,40px)] py-[clamp(5px,4vh,40px)] gap-y-[clamp(5px,3vh,30px)] gap-x-[clamp(5px,2vw,30px)]">
                 {
                     sortingTask(
-                    tasksCustom.flatMap((day, indexTop) => (
-                        day.tasks.map((el, indexBottom) => (
+                    tasksCustom.flatMap((day : TasksCollectionIntf, indexTop) => (
+                        day.tasks.map((el : TaskIntf, indexBottom) => (
                             sortedHigh && "high" == el.priority.toLowerCase() || sortedMedium && "medium" == el.priority.toLowerCase() || sortedLow && "low" == el.priority.toLowerCase() ? (
                             <TaskComponent key={String(indexTop) + String(indexBottom)} header={el.header} content={el.content} priority={el.priority} deadline={`${day.date} ${el.deadline}`}/>
                             ) : ""

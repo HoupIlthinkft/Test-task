@@ -11,7 +11,7 @@ export function AddTaskComponent() {
     const deadlineStartRef = useRef(null);
     const deadlineEndRef = useRef(null);
 
-    const [date, setDate] = useState(new Date());
+    const [date, setDate] = useState<Date>(new Date());
     const [deadlineStart, setDeadlineStart] = useState("12:00");
     const [deadlineEnd, setDeadlineEnd] = useState("12:00");
 
