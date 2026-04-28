@@ -1,7 +1,7 @@
 # TaskManager
 
 ## Стек: 
-#### Основной: React, TS, Tailwindcss
+#### Основной: React, TypeScript, HTML5, CSS3, Tailwind
 ###### Вторичный: Flatpickr, Jest, react-testing-library, vitest
 
 
