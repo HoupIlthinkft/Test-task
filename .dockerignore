@@ -1,0 +1,27 @@
+# Зависимости (самое важное!)
+node_modules
+
+# Папки сборки (мы собираем проект заново внутри докера)
+dist
+build
+.next
+out
+
+# Логи и конфиги системы
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.DS_Store
+thumbs.db
+
+# Конфиги Git и Docker
+.git
+.gitignore
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Секреты (чтобы случайно не зашить их в образ)
+.env
+.env.local
+

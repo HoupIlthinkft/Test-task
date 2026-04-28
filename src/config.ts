@@ -10,7 +10,7 @@ interface TaskIntf {
 
 interface AddTaskIntf {
     date: string,
-    content: TaskIntf,
+    task: TaskIntf,
 }
 
 interface TasksCollectionIntf {
@@ -18,16 +18,40 @@ interface TasksCollectionIntf {
     tasks: TaskIntf[],
 }
 
-export const useTasksStore = create(
+declare global {
+    interface Date {
+        fp_incr(days: number): Date;
+    }
+}
+
+interface TasksStoreIntf {
+    tasksOnWeeklyCollections: TasksCollectionIntf[];
+    setTasksOnWeeklyCollections: (task : TasksCollectionIntf[]) => void;
+    tasksCustomRangeCollections: TasksCollectionIntf[];
+    setTasksCustomRangeCollections: (tasks : TasksCollectionIntf[]) => void;
+}
+
+interface NotificationStoreIntf {
+    notificationActivity: boolean;
+    setNotificationActivity: (activity : boolean) => void;
+    notificationContent: {
+        typeNotification: "error" | "success" | "";
+        content: string;
+    };
+    setNotificationContent: (content : ["error" | "success", string]) => void
+    
+}
+
+export const useTasksStore = create<TasksStoreIntf>()(
     immer((set) => ({
-        tasksOnWeeklyCollections: [],
-        setTasksOnWeeklyCollections: (tasks) => set((state) => {state.tasksOnWeeklyCollections = tasks}),
-        tasksCustomRangeCollections: [],
-        setTasksCustomRangeCollections: (tasks) => set((state) => {state.tasksCustomRangeCollections = tasks}),
+        tasksOnWeeklyCollections: [] as TasksCollectionIntf[],
+        setTasksOnWeeklyCollections: (tasks : TasksCollectionIntf[]) => set((state) => {state.tasksOnWeeklyCollections = tasks}),
+        tasksCustomRangeCollections: [] as TasksCollectionIntf[],
+        setTasksCustomRangeCollections: (tasks : TasksCollectionIntf[]) => set((state) => {state.tasksCustomRangeCollections = tasks}),
     }))
 )
 
-export const useNotificationStore = create(
+export const useNotificationStore = create<NotificationStoreIntf>()(
     immer((set) => ({
         notificationActivity: false,
         setNotificationActivity: (activity) => set((state) => {state.notificationActivity = activity}),

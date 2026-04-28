@@ -1,0 +1,8 @@
+version: '3'
+services:
+  frontend:        # Название сервиса
+    build: .       # Где лежит Dockerfile (точка = в этой же папке)
+    ports:
+      - "8080:80"  # Связываем порт компа 8080 с портом контейнера 80
+    restart: always
+

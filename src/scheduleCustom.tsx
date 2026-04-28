@@ -13,9 +13,9 @@ export function ScheduleCustomComponent({tasksCustom} : {
     const [rangeDate, setRangeDate] = useState<Date[] | null>(null);
 
     const [sortingMenuOpen, setSortingMenuOpen] = useState<boolean>(false);
-    const rangeCalendar = useRef(null);
+    const rangeCalendar = useRef<any>(null);
 
-    const [sorting, setSorting] = useState<"usSorted" | "sorted" | "revSorted">("unSorted");
+    const [sorting, setSorting] = useState<"unSorted" | "sorted" | "revSorted">("unSorted");
     const [sortedHigh, setSortedHigh] = useState<boolean>(true);
     const [sortedMedium, setSortedMedium] = useState<boolean>(true);
     const [sortedLow, setSortedLow] = useState<boolean>(true);
@@ -25,9 +25,6 @@ export function ScheduleCustomComponent({tasksCustom} : {
         if (rangeDate != null) getTasksForCustomRange([new Date(rangeDate[0].setHours(new Date().getTimezoneOffset() / -60, 0, 0)).toJSON(), new Date(rangeDate[1].setHours(new Date().getTimezoneOffset() / -60, 0, 0)).toJSON()]);
     }, [rangeDate]);
 
-    useEffect(() => {
-        rangeCalendar.current.flatpickr.input.value = `${new Date(new Date().setHours(new Date().getTimezoneOffset() / -60, 0, 0)).toJSON()} to ${new Date(new Date().fp_incr(6).setHours(new Date().getTimezoneOffset() / -60, 0, 0)).toJSON()}`;
-    }, []);
 
     return (
         <div className="flex flex-col self-center w-[90vw] gap-[clamp(5px,3vh,30px)] mx-[clamp(10px,2vw,40px)] my-[clamp(10px,4vh,40px)]">
@@ -43,11 +40,12 @@ export function ScheduleCustomComponent({tasksCustom} : {
                                 mode: "range",
                                 minDate: "today",
                                 maxDate: new Date().fp_incr(30),
+                                defaultDate: [new Date(new Date().setHours(new Date().getTimezoneOffset() / -60, 0, 0)).toJSON(), new Date(new Date().fp_incr(6).setHours(new Date().getTimezoneOffset() / -60, 0, 0)).toJSON()],
                                 altInput: true,
                                 altFormat: 'F j',
                                 dateFormat: 'Y-m-d',
                             }}
-                            onChange={(selectedDates : [Date, Date]) => {
+                            onChange={(selectedDates : Date[]) => {
                                 if (selectedDates.length == 2) setRangeDate(selectedDates);
                             }}
                         />
@@ -106,7 +104,7 @@ export function ScheduleCustomComponent({tasksCustom} : {
 }
 
 
-function sortingTask(tasks, rule : "sorted" | "revSorted" | "unSorted") {
+function sortingTask(tasks : any, rule : "sorted" | "revSorted" | "unSorted") {
     if (rule == "unSorted") return tasks;
     else {
         let low : number = 0;

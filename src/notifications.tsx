@@ -10,32 +10,34 @@ export function callNotifications(typeNotification : "error" | "success", conten
 
 export function NotificationComponent() {
 
-    const notificationRef = useRef(null);
+    const notificationRef = useRef<HTMLDivElement>(null);
     const notification : boolean = useNotificationStore((state) => state.notificationActivity);
 
     const [typeNotification, setTypeNotification] = useState<"error" | "success" | null>(null);
     const [content, setContent] = useState<string | null>(null);
 
     useEffect(() => {
-        if (notification) {
-            setTypeNotification(useNotificationStore.getState().notificationContent.typeNotification);
-            setContent(useNotificationStore.getState().notificationContent.content);
+        if (notificationRef.current !== null) {
+            if (notification) {
+                setTypeNotification(useNotificationStore.getState().notificationContent.typeNotification as "error" | "success");
+                setContent(useNotificationStore.getState().notificationContent.content as string);
 
-            notificationRef.current.style.display = "initial"
-            notificationRef.current.style.opacity = 1;
-            notificationRef.current.style.translate = "0 clamp(5px,15vh,150px)";
-            notificationRef.current.style["transition-duration"] = "1s"
+                notificationRef.current.style.display = "initial"
+                notificationRef.current.style.opacity = "1";
+                notificationRef.current.style.translate = "0 clamp(5px,15vh,150px)";
+                notificationRef.current.style.transitionDuration = "1s"
 
 
-            setTimeout(() => {
-                useNotificationStore.getState().setNotificationActivity(false);
-            }, 3000);
-        } else {
-            notificationRef.current.style.display = "initial";
-            notificationRef.current.style.opacity = 0;
-            notificationRef.current.style.translate = "";
-            notificationRef.current.style["transition-duration"] = "3s,10s"
-            
+                setTimeout(() => {
+                    useNotificationStore.getState().setNotificationActivity(false);
+                }, 3000);
+            } else {
+                notificationRef.current.style.display = "initial";
+                notificationRef.current.style.opacity = "0";
+                notificationRef.current.style.translate = "";
+                notificationRef.current.style.transitionDuration = "3s,10s"
+                
+            }
         }
     }, [notification])
 
@@ -45,7 +47,7 @@ export function NotificationComponent() {
             style={{ "borderColor": `var(--color-notification-${typeNotification})`}}>
             <div className='flex flex-row gap-[clamp(10px,2vw,30px)] justify-between'>
                 <p className="font-semibold text-[clamp(0.75rem,1.5vw,1.5rem)]" style={{color: `var(--color-notification-${typeNotification})`}}>{typeNotification == "error" ? "Ошибка" : "Успешно"}</p>
-                <span onClick={() => {notificationRef.current.style.display = "none"}} className="material-symbols-outlined cursor-pointer scale-[0.5] md:scale-[1]">close</span>
+                <span onClick={() => {notificationRef!.current!.style.display = "none"}} className="material-symbols-outlined cursor-pointer scale-[0.5] md:scale-[1]">close</span>
             </div>
             <p className="font-medium text-[clamp(0.5rem,1vw,1rem)]">{content}</p>
         </div>

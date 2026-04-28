@@ -5,13 +5,13 @@ import { callNotifications } from "./notifications.tsx";
 import Flatpickr from "react-flatpickr";
 
 export function AddTaskComponent() {
-    const header = useRef(null);
-    const content = useRef(null);
-    const priority = useRef(null);
-    const deadlineStartRef = useRef(null);
-    const deadlineEndRef = useRef(null);
+    const header = useRef<HTMLInputElement | null>(null);
+    const content = useRef<HTMLTextAreaElement | null>(null);
+    const priority = useRef<HTMLSelectElement | null>(null);
+    const deadlineStartRef = useRef<any>(null);
+    const deadlineEndRef = useRef<any>(null);
 
-    const [date, setDate] = useState<Date>(new Date());
+    const [date, setDate] = useState<string>(new Date().toJSON());
     const [deadlineStart, setDeadlineStart] = useState("12:00");
     const [deadlineEnd, setDeadlineEnd] = useState("12:00");
 
@@ -22,10 +22,10 @@ export function AddTaskComponent() {
                         else addTask({
                             date: date,
                             task: {
-                                    header: header.current?.value,
-                                    content: content.current?.value,
-                                    priority: priority.current?.value,
-                                    deadline: [deadlineStart, deadlineEnd],
+                                    header: header.current?.value as string,
+                                    content: content.current?.value as string,
+                                    priority: priority.current?.value as "high" | "medium" | "low",
+                                    deadline: `${deadlineStart}-${deadlineEnd}`,
                                 }
                             }
                         );

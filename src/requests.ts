@@ -1,12 +1,12 @@
 import stub from "./assets/stub.json";
-import type { TaskIntf, TasksCollectionIntf, AddTaskIntf } from "./config.ts";
+import type { AddTaskIntf } from "./config.ts";
 
 import { callNotifications } from "./notifications.tsx";
 
 export async function getTasksOnThisWeekly() {
     const [start, end] : [string, string] = [new Date(new Date().setHours(new Date().getTimezoneOffset() / -60, 0, 0)).toJSON(), new Date(new Date().fp_incr(6).setHours(new Date().getTimezoneOffset() / -60, 0, 0)).toJSON()]
 
-    const response : TasksCollectionIntf[] = await getTasksForCustomRange([start, end]);
+    const response = await getTasksForCustomRange([start, end]);
 
     return response;
 }
@@ -14,7 +14,7 @@ export async function getTasksOnThisWeekly() {
 export async function getTasksForCustomRange(selectedDates : [string, string]) {
     
     try {
-        const response : TasksCollectionIntf[] = await fetch((`/api/tasks?${selectedDates[0]}-${selectedDates[1]}/`), {
+        const response = await fetch((`/api/tasks?${selectedDates[0]}-${selectedDates[1]}/`), {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -22,9 +22,14 @@ export async function getTasksForCustomRange(selectedDates : [string, string]) {
             }
         );
         
+
+        if (response.status == 404) return stub;
+
+
+
         if (!response.ok) {
             callNotifications("error", `Ошибка сервера: ${response.status}`);
-            return -1;
+            return null;
         } else callNotifications("success", "Таски загружены");
         
         return stub;

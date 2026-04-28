@@ -12,7 +12,7 @@ import { NotificationComponent } from "./notifications.tsx";
 
 import { getTasksOnThisWeekly } from "./requests.ts";
 import { useTasksStore } from "./config.ts";
-import type { TaskCollectionIntf } from "./config.ts";
+import type { TasksCollectionIntf } from "./config.ts";
 
 export default function App() {
     const [activePage, setActivePage] = useState(0);
@@ -20,10 +20,12 @@ export default function App() {
     
     useEffect(() => {
         const loadTasks = async () => {
-            const data : TaskCollectionIntf[] = await getTasksOnThisWeekly();
-
-            useTasksStore.getState().setTasksOnWeeklyCollections(data);
-            useTasksStore.getState().setTasksCustomRangeCollections(data);
+            const data = await getTasksOnThisWeekly() as TasksCollectionIntf[] | null | undefined;
+            
+            if (data !== null && data !== undefined) {
+                useTasksStore.getState().setTasksOnWeeklyCollections(data);
+                useTasksStore.getState().setTasksCustomRangeCollections(data);
+            };
 
             setRender(true);
         };
@@ -34,8 +36,8 @@ export default function App() {
 
     if (!render) return;
 
-    const tasksWeekly : TaskCollectionIntf[] = useTasksStore.getState().tasksOnWeeklyCollections;
-    const tasksCustom : TaskCollectionIntf[] = useTasksStore.getState().tasksCustomRangeCollections;
+    const tasksWeekly : TasksCollectionIntf[] = useTasksStore.getState().tasksOnWeeklyCollections;
+    const tasksCustom : TasksCollectionIntf[] = useTasksStore.getState().tasksCustomRangeCollections;
     
 
     const pages : string[] = ["Главная страница", "Расписание на сегодня", "Расписание на неделю", "Добавить задачу", "Выбрать даты"];
