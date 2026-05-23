@@ -15,55 +15,69 @@ import { useTasksStore } from "./config.ts";
 import type { TasksCollectionIntf } from "./config.ts";
 
 export default function App() {
-    const [activePage, setActivePage] = useState(0);
-    const [render, setRender] = useState(false);
-    
-    useEffect(() => {
-        const loadTasks = async () => {
-            const data = await getTasksOnThisWeekly() as TasksCollectionIntf[] | null | undefined;
-            
-            if (data !== null && data !== undefined) {
-                useTasksStore.getState().setTasksOnWeeklyCollections(data);
-                useTasksStore.getState().setTasksCustomRangeCollections(data);
-            };
+  const [activePage, setActivePage] = useState(0);
+  const [render, setRender] = useState(false);
 
-            setRender(true);
-        };
+  useEffect(() => {
+    const loadTasks = async () => {
+      const data = (await getTasksOnThisWeekly()) as
+        | TasksCollectionIntf[]
+        | null
+        | undefined;
 
-        if (!render) loadTasks();
-    }, []);
+      if (data !== null && data !== undefined) {
+        useTasksStore.getState().setTasksOnWeeklyCollections(data);
+        useTasksStore.getState().setTasksCustomRangeCollections(data);
+      }
 
+      setRender(true);
+    };
 
-    if (!render) return;
+    if (!render) loadTasks();
+  }, []);
 
-    const tasksWeekly : TasksCollectionIntf[] = useTasksStore.getState().tasksOnWeeklyCollections;
-    const tasksCustom : TasksCollectionIntf[] = useTasksStore.getState().tasksCustomRangeCollections;
-    
+  if (!render) return;
 
-    const pages : string[] = ["Главная страница", "Расписание на сегодня", "Расписание на неделю", "Добавить задачу", "Выбрать даты"];
-    
-    const components : React.ReactElement[] = [
-        <HomeComponent
-            tasksWeekly={tasksWeekly}
-        />,
-        <ScheduleTodayComponent
-            tasksOnToday={tasksWeekly[0]}
-            tasksWeekly={tasksWeekly}
-        />,
-        <ScheduleWeeklyComponent
-            tasksWeekly={tasksWeekly}
-        />,
-        <AddTaskComponent/>,
-        <ScheduleCustomComponent 
-            tasksCustom={tasksCustom}
-        />,
-    ];
+  const tasksWeekly: TasksCollectionIntf[] =
+    useTasksStore.getState().tasksOnWeeklyCollections;
+  const tasksCustom: TasksCollectionIntf[] =
+    useTasksStore.getState().tasksCustomRangeCollections;
 
-    return (
-        <>
-            <NavComponent pages={pages} activePage={activePage} setActivePage={setActivePage} />
-            {components[activePage]}
-            <NotificationComponent />
-        </>
-    )
+  const pages: string[] = [
+    "Главная страница",
+    "Расписание на сегодня",
+    "Расписание на неделю",
+    "Добавить задачу",
+    "Выбрать даты",
+  ];
+
+  const components: React.ReactElement[] = [
+    <HomeComponent key="HomeComponent" tasksWeekly={tasksWeekly} />,
+    <ScheduleTodayComponent
+      key="ScheduleTodayComponent"
+      tasksOnToday={tasksWeekly[0]}
+      tasksWeekly={tasksWeekly}
+    />,
+    <ScheduleWeeklyComponent
+      key="ScheduleWeeklyComponent"
+      tasksWeekly={tasksWeekly}
+    />,
+    <AddTaskComponent key="AddTaskComponent" />,
+    <ScheduleCustomComponent
+      key="ScheduleCustomComponent"
+      tasksCustom={tasksCustom}
+    />,
+  ];
+
+  return (
+    <>
+      <NavComponent
+        pages={pages}
+        activePage={activePage}
+        setActivePage={setActivePage}
+      />
+      {components[activePage]}
+      <NotificationComponent />
+    </>
+  );
 }
