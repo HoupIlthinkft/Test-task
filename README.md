@@ -1,39 +1,27 @@
-# TaskManager
+# Планы
 
-## Стек: 
-#### Основной: React, TypeScript, HTML5, CSS3, Tailwind
-###### Вторичный: Flatpickr, Jest, react-testing-library, vitest
+## Cтек:  
+### Frontend: Next.js + React
+### Backend: Fastify
+### StateManager: Zustand
+### Server DataBase: SQLite3
+### ClientSide DataBase: IndexedDB
+### UI/UX: HeroUI, lucide, TailwindCSS
 
+### 1. **Ручки**:  
+    1.1: получение по айди GET  
+    1.2: добавление таска POST  
+    1.3: изменение таска PATCH  
+    1.4: удаление таска DELETE
 
-## Запуск проекта
+### 2. **Фронтенд**:  
+    2.1: **Главная страница** на сегодня + важные ближайшие  
+    2.2: **Создание таска** название, теги, содержание + поддержка MD, дата, комментарии  
+    2.3: **Общий календарь где будут ВСЕ ТАСКИ** ленивая загрузка   
+    2.4: **Что-то для отдыха** игра чтобы человек был в состоянии опустошения мог расслабиться 
 
-**Подготовительный этап**:
-Установить следующие программы, для работоспособности:
-- **macOS / Linux**: `git`, `docker` (или `docker-engine`) и `docker-compose` (или Docker Desktop).
-- **Windows**: Docker Desktop (рекомендуется) или Docker Engine + Docker Compose, и `git`.
-
-**Запуск**
-
-1. Клонируйте репозиторий и перейдите в папку проекта:
-
-```bash
-git clone https://github.com/HoupIlthinkft/TaskManager.git
-cd TaskManager
-```
-
-2. Убедитесь, что Docker (или Docker Desktop) запущен.
-
-3. Поднимите сервис:
-
-```bash
-docker-compose up --build
-```
-
-4. После старта сервиса:
-- Фронтенд будет доступен по http://localhost:8080/
-
-5. Остановка и удаление контейнеров:
-
-```bash
-docker-compose down
-```
+### 3. **Фичи**:
+    3.1: Гибкое изменение контента в таске (markdown, цвет)  
+    3.2: Создание и присвоение тегов  
+    3.3: Анимации уровня: Мечта СДВГшника  
+    3.4: Змейка/Сапер
